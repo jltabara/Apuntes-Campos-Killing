@@ -1,2 +1,3 @@
-# Apuntes-Campos-Killing
-Apuntes sobre Campos de Killing. Formato LaTeX
+# Apuntes Campos de Killing
+
+Apuntes sobre Campos de Killing. Formato LaTeX.

@@ -1,0 +1,541 @@
+\documentclass[a4paper, 12pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%Paquetes
+\usepackage[spanish]{babel}  
+\usepackage{indentfirst} %%%%%%%%%%%%%%%%Crear un indent al principio
+\usepackage[latin1]{inputenc}%%%%%%%%%%%%ñ y acentos
+\usepackage{amstext}%%%%%%%%
+\usepackage{amsfonts}%%%%%%%
+\usepackage{amssymb}%%%%%%%% AMSLaTeX
+\usepackage{amscd}%%%%%%%%%%
+\usepackage{amsmath}%%%%%%%%
+\usepackage{enumerate}%%%%%%%%%%%%%%%%Mejoras del entorno enumerate
+\usepackage[all]{xy}
+\usepackage{latexsym}
+\usepackage{color}
+\usepackage[mathcal]{eucal}%%%%%%%Caligrafica matematica
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{tcolorbox}
+\usepackage{setspace}
+\onehalfspacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%Teoremas
+\newtheorem{teo}{Teorema}[section]%%%%%%%%% Teorema
+\newtheorem{defi}{Definición}[section]%%%%%%%% Definicion
+\newtheorem{lema}[teo]{Lema}%%%%%%%%%%%%% Lema
+\newtheorem{propo}[teo]{Proposición}%%%%%%%% Proposicion
+\newtheorem{cor}[teo]{Corolario}%%%%%%%%%%%Corolario
+\newtheorem{pro1}{Problema}%[chapter]%%%%%%%%%Problema
+\newenvironment{pro}{\begin{pro1} \sf \small} {\end{pro1}}
+\newtheorem{*pro1}[pro1]{* Problema}%%%%%%%%%%Problema complicado
+\newenvironment{*pro}{\begin{*pro1} \sf} {\end{*pro1}}
+\newcommand{\escalar}[2]{\left\langle\, #1,#2\, \right\rangle}  %%%Producto escalar 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%Comandos
+\newcommand{\dem}{\textbf{Demostración. }\vspace{0.3 cm}}%%Demostracion
+\newcommand{\R}{\mathbb{R}}%%%%%%%%%%%%Numeros reales
+\newcommand{\F}{\mathbb{F}}%%%%%%%%%%%%Cuerpo
+\newcommand{\C}{\mathbb{C}}%%%%%%%%%%%%Numeros complejos
+\newcommand{\Q}{\mathbb{Q}}%%%%%%%%%%%%Numeros racionales
+\newcommand{\N}{\mathbb{N}}%%%%%%%%%%%%Numeros naturales
+\newcommand{\Z}{\mathbb{Z}}%%%%%%%%%%%%Numeros enteros
+\newcommand{\g}{\mathfrak{g}}%%%%%%%%%%%%Algebra de Lie del grupo G
+\newcommand{\V}{\mathcal{V}}%%%%%%%%%%%%Variedad
+\newcommand{\W}{\mathcal{W}}%%%%%%%%%%%%Variedad
+\newcommand{\coZ}{Z}%%%%
+\newcommand{\coB}{B}%%%%  Cohomologia
+\newcommand{\coH}{H}%%%%
+\newcommand{\h}{\mathcal{H}}%%%%%%%%%%%%Algebra de Lie del grupo H
+\newcommand{\fin}{ $\Box $ \vspace{0.4 cm}}
+\newcommand{\p}{\mathfrak{p}}%%%%%%%% Ideal primo
+\newcommand{\m}{\mathfrak{m}}%%%%%%%% Ideal maximal
+\newcommand{\limind}{\lim_{\longrightarrow} } 
+\newcommand{\gp}{\mathcal{G'}}%%%%%%%%%%%Algebra del grupo G'
+\newcommand{\lto}{\longrightarrow}%%%%%%Simplificacion de la flecha larga
+\newcommand{\wa}{\omega_2} %%%%%%%%%%%forma simplectica
+\newcommand{\Wa}{\Omega_2} %%%%%%%%%% forma simplectica lineal
+\newcommand{\lag}{\lambda_g}%%%%%%%%%%%%Traslacion a la izquierda
+\newcommand{\rg}{\rho_g}%%%%%%%%%%%%%%%%Traslacion a la derecha
+\newcommand{\Gr}{\boldsymbol{G}}%%%%%%%%%%Recubridor universal
+\newcommand{\norma}[1]{\: \parallel #1 \!\parallel\! }%%%Norma de un vector
+\newcommand{\abs}[1]{\left|\, #1 \right|}  %%%Valor absoluto 
+\newcommand{\Pro}{\mathbb{P}}%%%%%%Espacio proyectivo
+\newcommand{\Problemas}{\newpage  \begin{center}{\Huge Problemas}\end{center}}
+\newcommand{\Ejemplos}{\vspace{0.5 cm} {\bf Ejemplos}}
+\newcommand{\cpt}{\textit{cpt}}  %%%%%Casi por todo
+\newcommand{\campos}{\text{Der} } %%%% Campos en una variedad
+\renewcommand{\to}{\lto}
+\newcommand{\Lie}{\mathcal{L}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%Operadores
+\DeclareMathOperator{\End}{End}%%%%%%%%%%Endomorfismo
+\DeclareMathOperator{\Ad}{Ad}%%%%%%%%%%Adjunta
+\DeclareMathOperator{\grad}{grad}%%%%%%%%%%Graciente
+\DeclareMathOperator{\Dif}{Dif}%%%%%%%%%%Diferenciales
+\DeclareMathOperator{\sop}{sop}%%%%%%%%%Soporte
+\DeclareMathOperator{\distancia}{d}%%%%%%%%Distancia
+\DeclareMathOperator{\sen}{sen}%%%%%%%%%%Seno español
+\DeclareMathOperator{\Der}{Der}%%%%%%%%%%Derivaciones
+\DeclareMathOperator{\rang}{rang}%%%%%%%%Rango
+\DeclareMathOperator{\Hom}{Hom}%%%%%%Homomorfismos
+\DeclareMathOperator{\Ann}{Ann}%%%%%%%Anulador
+\DeclareMathOperator{\Img}{Im} %%%%Parte imaginaria
+\DeclareMathOperator{\rad}{rad}%%%%%%%%Radical
+\DeclareMathOperator{\Ker}{Ker}%%%%%%%Nucleo
+\DeclareMathOperator{\Id}{Id}%%%%%%% Identidad
+\DeclareMathOperator{\GL}{GL}%%%%%%%%%Grupo lineal
+\DeclareMathOperator{\Apli}{Apli}%%%%%%Aplicaciones
+\DeclareMathOperator{\Bil}{Bil}%%%%%Bilineales
+\DeclareMathOperator{\Spec}{Spec}%%%%Espectro
+\DeclareMathOperator{\Ob}{Ob}  %%% Objetos de una categoría
+\DeclareMathOperator{\Tor}{Tor}%%%%%Torsion de una conexión lineal
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%
+\title{Campos de Killing}
+\author{José Luis Tábara}
+\date{jltabara@gmail.com}
+%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black]
+
+\vspace{-1cm}
+\maketitle
+
+\end{tcolorbox}
+
+\thispagestyle{empty}
+
+
+
+\begin{pro}
+
+$X$ es un campo de Killing si y solo si el tensor de tipo $(1,1)$, $\nabla X$, entendido como endomorfismo del módulo de campos, es antisimétrico respecto a la métrica $g$.
+
+\end{pro}
+
+\dem
+
+Para entender $\nabla X$ como endomorfismo definimos $\nabla X(Y) = \nabla_Y X$.
+
+Un endomorfismo $A$ del módulo de campos es antisimétrico respecto a la métrica $g$ si
+$$
+g(A(Y),Z)+g(Y,A(Z))=0
+$$
+
+Si el endomorfismo $A$ es $\nabla_X$ esta fórmula se traduce en la siguiente
+$$
+g(\nabla X (Y),Z)+g(Y,\nabla X (Z))= g (\nabla_Y X, Z)+ g(Y, \nabla_Z X)=0
+$$
+
+Por definición de derivada de Lie de tensores
+$$
+(\Lie_X g)(Y,Z) = X (g(Y,Z))- g(\Lie_XY,Z)- g(Y, \Lie_X Z)
+$$
+
+Por definición de derivación covariante de tensores
+$$
+(\nabla_X g)(Y,Z) = X (g(Y,Z))- g(\nabla_XY,Z)- g(Y, \nabla_X Z)
+$$
+
+Despejamos $X(g(Y,Z))$ en la segunda ecuación\footnote{O utilizamos directamente que $X(g(Y,Z))= g(\nabla_X,Y)+g(Y,\nabla_X Z)$}  y lo sustituimos en la pri\-mera.  Aplicamos también que la derivada de Lie cumple $\Lie_X Y = [X,Y]$ y obte\-nemos
+\begin{equation*}
+\begin{split}
+(\Lie_X g)(Y,Z) = (\nabla_X g)(Y,Z) + g(\nabla_XY,Z)+ g(Y, \nabla_X Z)\\
+- g(\Lie_XY,Z)- g(Y, \Lie_X Z)
+\end{split}
+\end{equation*}
+
+Utilizando que la torsión es nula
+$$
+(\Lie_X g)(Y,Z) = (\nabla_X g)(Y,Z) + g(\nabla_YX,Z)+ g(Y, \nabla_ZX)
+$$
+
+Como la conexión conserva la métrica
+$$
+(\Lie_X g)(Y,Z) =  g(\nabla_YX,Z)+ g(Y, \nabla_ZX)
+$$
+o también
+$$
+(\Lie_X g)(Y,Z) =  g(\nabla X(Y),Z)+ g(Y, \nabla X (Z))
+$$
+
+Que el campo sea de Killing equivale a que la parte izquierda de la ecuación sea nula. Que el tensor $\nabla X$ sea  antisimétrico equivale a que la parte derecha de la ecuación sea nula.  \fin
+
+\newpage
+
+\begin{pro}
+
+Sea $X$ un campo de Killing en una variedad $\V$ y sea $p$ un punto tal que $X(p)\neq 0$.  Entonces existe un entorno de $p$ y un sistema de coordenadas $(x_1,\dots, x_n)$ de tal forma que los coeficientes $g_{ij}$ de la métrica en dicho sistema de coordenadas no dependen de $x_n$.
+
+\end{pro}
+
+Es un hecho conocido que el teorema  de existencia y unicidad de ecuaciones diferenciales nos dice que cualquier campo $X$ que no se anule en $p$ se puede escribir en la forma
+$$
+X= \frac{\partial}{\partial y}
+$$
+donde $y$ forma parte de un sistema de coordenadas.  A veces este teorema se llama de reducción local a forma canónica.
+
+Supongamos que $y$ es la última coordenada $y = x_n$.  En estas condiciones 
+$$
+X= \frac{\partial}{\partial x_n}
+$$
+en un entorno de $p$.
+
+
+Si $X$ es un campo de Killing tenemos
+$$
+\Lie_X g =0 \Leftrightarrow \Lie_X(g_{ij} dx_i \otimes dx_j)=0
+$$
+Aplicamos ahora que la derivada de Lie es local y que es una derivación del álgebra tensorial y obtenemos
+$$
+X(g_{ij}) dx_i \otimes dx_j + g_{ij} \Lie_X (dx_i) \otimes dx_j + g_{ij} dx_i \otimes \Lie_X(dx_j)=0
+$$
+
+
+Los dos últimos sumandos son nulos pues $X$ es la derivada parcial respecto a una coordenada y entonces $\Lie_X(x_i)$ siempre es constante (cero o uno).
+
+Por lo tanto 
+$$
+\Lie_X g =0 \Leftrightarrow X(g_{ij}) dx_i \otimes dx_j =0  \Leftrightarrow \frac{\partial(g_{ij})}{\partial x_n}\,\, dx_i \otimes dx_j =0
+$$
+Como $dx_i \otimes dx_j$ son independientes tenemos que 
+$$
+ \frac{\partial(g_{ij})}{\partial x_n}=0
+$$
+y bajo condiciones bien conocidas esto implica que $g_{ij}$ no depende de la coordenada $x_n$.  \fin
+
+
+\newpage
+
+\begin{pro}
+
+Sea $\varphi: \V \lto \W$ una isometría.  Sea $X$ un campo en $\V$ y sea $\varphi_* (X)$ la imagen directa del campo $X$ mediante el difeomerfismo $\varphi$.  Entonces
+
+\centerline{ $X$ de Killing si y solo si $\varphi_*(X)$ es de Killing}
+
+
+\end{pro}
+
+\dem
+
+Sabemos que un campo es de Killing si y solo si el flujo o grupo uniparamétrico de difeomorfismos (locales en general) que genera está compuesto por isometrías. Denotemos por $\tau_s$ el flujo local generado por el campo $X$. 
+
+La imagen mediante $\varphi$ de las curvas solución del campo $X$ son justamente las curvas solución del campo imagen directa.  De este modo el flujo del campo imagen directa es $\varphi \tau_s \varphi^{-1}$.  Como estas aplicaciones son isometrías (localmente) el campo imagen directa tiene un flujo formado por isometrías y entonces es un campo de Killing. \fin
+
+
+
+
+\newpage
+
+\begin{pro}
+
+Sea $X$ un campo de Killing.  Denotamos por $X_\gamma$ la restricción de $X$ a una geodésica $\gamma: I \lto \V$.  Entonces $X_\gamma$ es un campo de Jacobi para la geodésica $\gamma$.
+
+\end{pro}
+
+\dem
+
+El demostrar que un campo es de Jacobi es una cuestión local.  Demostra\-remos que en un entorno de cada punto de la geodésica es un campo de Jacobi.
+
+Denotaremos por $\tau_s$ el flujo local asociado al campo $X$.  Como $X$ es de Killing cada aplicación $\tau_s$ es una isometría (en general local). Recordemos que la curva integral del campo $X$ que pasa por $p$ es precisamente $s \lto \tau_s(p)$.
+
+Fijemos ahora un punto $\gamma(t_0)$.  Existe un entorno $[a,b]$ de ese punto de tal forma que podemos definir la variación
+$$
+\begin{array}{lccc}
+\Gamma:& (-\varepsilon, \varepsilon) \times [a,b] & \lto &   \V  \\
+        &   (s,t) & \lto & \tau_s(\gamma(t))
+\end{array}
+$$
+
+Como $\tau_s$ es una isometría, lleva geodésicas en geodésicas y cada una de las curvas principales de esta variación es una geodésica.  Sabemos que el campo asociado a una variación formada totalmente por geodésicas es un campo de Jacobi.
+Calculemos entonces dicho campo.  Para ello debemos fijar $t$ y hacer variar $s$.  Pero para $t$ fijo la curva $s \lto \tau_s(\gamma(t))$ es la curva integral del campo que pasa por el punto $\gamma(t)$.  Luego su derivada respecto a $s$ para $s=0$ tiene que ser precisamente $X_{\gamma(t)}$, que es entonces un campo de Jacobi.  \fin
+
+
+\newpage
+
+\begin{pro}
+
+Sea $X$ un campo de Killing para el que exista un punto $p$ que cumpla $X(p)=0$ y $(\nabla X)_p=0$.  Entonces $X$ es nulo en un entorno de $p$.  Si la variedad es conexa entonces es nulo globalmente.
+
+\end{pro}
+
+\dem
+
+Utilizaremos que cada campo de Killing es un campo de Jacobi sobre cual\-quier geodésica.  También utilizaremos un entorno normal de $p$, para poder unir $p$ con cualquier punto a través de una geodésica.
+
+Sea $\gamma$ una geodésica que parta de $p$.  Supondremos que $\gamma(0)=p$.  Entonces $X_p=0$.  Para determinar el campo de Jacobi totalmente necesitamos calcular la derivada covariante de $X$ en el punto $p$
+$$
+D_t(X)_{\gamma(0)} = \nabla_{\dot \gamma (0)} X
+$$
+aplicando la definición de derivada covariante a lo largo de una curva.
+
+Pero  resulta que esta definición la podemos poner en función de la derivada covariante de $X$
+$$
+\nabla_{\dot \gamma (0)} X= \nabla X (\dot \gamma (0))
+$$
+que es nulo puesto que en el punto $p= \gamma(0)$ el tensor $\nabla X$ es nulo.
+
+Como tanto $X$ como $D_t(X)$ son nulos, por las propiedades de los campos de Jacobi, necesariamente es nulo en toda la geodésica.  Por ser el entorno normal, el campo $X$ es nulo en todo el entorno.
+
+\bigskip
+
+Los puntos $p$ que cumplen las condiciones $X(p)=0$ y $(\nabla X)(p)=0$ forman claramente un cerrado. Nosotros hemos demostrado que también forman un abierto.  Luego si la variedad es conexa el campo debe ser nulo globalmente.  \fin
+
+
+\newpage
+
+\begin{pro}
+
+Sea $X$ un campo de Killing en una variedad riemanniana.  Definimos la aplicación\footnote{En otros problemas yo he designado a esta aplicación como $\nabla X$}
+$$
+A_X:\campos(\V) \lto \campos (\V)
+$$
+mediante $A_X(Z)= \nabla_ZX$.  Consideremos la función $f=  \escalar{X}{X}$.  Sea $p$ un punto crítico de $f$ (esto es $d_pf=0$).  Probar que para todo campo $Z$ se cumple:
+$$
+\escalar{A_X(Z)}{X}(p)=0
+$$
+
+\end{pro}
+
+\dem
+
+Para demostrar este problema procederemos a calcular el gradiente de la función $f$.  Recordemos que si $h$ es cualquier función, el gradiente de $h$ es el único campo que cumple
+$$
+i_{\text{grad}\, h} g = dh
+$$
+Aplicamos esta identidad a un campo arbitrario
+\begin{eqnarray}
+i_{\text{grad}\, h}g (Z)&=& dh(Z)\\  \nonumber
+\escalar{\text{grad}\,h}{Z}& = &Z(h)  \nonumber
+\end{eqnarray}
+Tomemos ahora el caso de la función $f$ del ejercicio y desarrollemos $Z(f)$.  Utilizaremos que si $X$ es un campo de Killing el endomorfismo $\nabla X$ es antisimétrico.
+$$
+Z(f)= Y(\escalar{X}{X}) = 2\escalar{\nabla_Z X}{X}
+$$
+debido a que la conexión es riemanniana.  Como $\nabla X$ es antisimétrico
+$$
+\escalar{\nabla_Z X}{X}+ \escalar{Z}{\nabla_X X}=0
+$$
+despejando y sustituyendo obtenemos
+$$Z(f)= - 2\escalar{Z}{\nabla_X X} = \escalar{-2\nabla_XX}{Z}
+$$
+Como el gradiente es único entonces hemos demostrado que 
+$$
+\text{grad}f= -2\nabla_XX
+$$
+
+Ya podemos demostrar el resultado que nos solicitan
+$$
+\escalar{\nabla_ZX}{X}(p) = -\escalar{Z}{\nabla_XX}(p)=0
+$$
+puesto que el gradiente es nulo en $p$ si la diferencial es nula en $p$.  Ello es debido a que el gradiente es la imagen por la polaridad de la $1$-forma $df$.  \fin
+
+
+\newpage
+
+
+\begin{pro}\label{pro:hessiano}
+
+Sea $X$ un campo de Killing en una variedad riemanniana.  Definimos la aplicación $A_X:\campos(\V) \lto \campos (\V)$
+mediante $A_X(Z)= \nabla_ZX$.  Consideremos la función $f=  \escalar{X}{X}$.  Sea $p$ un punto crítico de $f$ (esto es $d_pf=0$).  Probar que para todo campo $Z$ se cumple:
+$$
+\escalar{A_XZ}{A_XZ}(p) = \frac{1}{2} Z_p (Z\escalar{X}{X} +\escalar{R(X,Z)X}{Z}(p)
+$$
+
+\end{pro}
+
+\dem
+
+La demostración es puro cálculo.  Para ello empezaremos calculando $ZZ\escalar{X}{X}$
+$$
+Z(\frac{1}{2}\escalar{X}{X}) = \escalar{\nabla_Z X}{X} = - \escalar{Z}{\nabla_X X}
+$$
+donde en la última igualdad hemos empleado la antisimetría del tensor $\nabla X$.  A este resultado le aplicamos $Z$.
+$$
+Z(-\escalar{Z}{\nabla_X X}) = -\escalar{\nabla_Z Z}{\nabla_X X}-\escalar{Z}{\nabla_Z \nabla_XX}
+$$
+
+De este modo podemos concluir que
+$$
+\frac{1}{2} ZZ\escalar{X}{X}=-\escalar{\nabla_Z Z}{\nabla_X X}-\escalar{Z}{\nabla_Z \nabla_XX}
+$$
+
+A esta expresión le sumamos la curvatura seccional, para de este modo calcular la parte derecha de la igualdad que nos piden. 
+\begin{equation}\nonumber
+\begin{split}
+\frac{1}{2} ZZ\escalar{X}{X} + R(X,Z,X,Z) = \\
+-\escalar{\nabla_Z Z}{\nabla_X X}-\escalar{Z}{\nabla_Z \nabla_XX}+\escalar{\nabla_Z\nabla_X X}{Z}- \\ \escalar{\nabla_X\nabla_ZX}{Z} +\escalar{\nabla_{[X,Z]} X}{Z}
+\end{split}
+\end{equation}
+Dos términos se tachan y queda
+\begin{equation}\nonumber
+\begin{split}
+\escalar{\nabla_{[X,Z]} X}{Z}-\escalar{\nabla_Z Z}{\nabla_X X}-\escalar{\nabla_X\nabla_ZX}{Z}=\\
+-\escalar{[X,Z]}{\nabla_ZX}-\escalar{\nabla_Z Z}{\nabla_X X}-\escalar{\nabla_X\nabla_ZX}{Z}
+\end{split}
+\end{equation}
+
+Como la torsión es nula $\nabla_ZX-\nabla_XZ=[X,Z]$.  Aplicamos también la antisimetría en el último sumando y finalmente obtenemos
+\begin{equation}\nonumber
+\begin{split}
+-\escalar{\nabla_XZ}{\nabla_ZX}+\escalar{\nabla_ZX}{\nabla_ZX}-\escalar{\nabla_XX}{\nabla_ZZ}+ \escalar{\nabla_ZX}{\nabla_ZX}=\\
++\escalar{\nabla_ZX}{\nabla_ZX}-\escalar{\nabla_XX}{\nabla_ZZ}
+\end{split}
+\end{equation}
+Hemos desarrollado la parte derecha de la ecuación que nos piden demostrar y hemos llegado al resultado anterior.  Esta fórmula es válida siempre.  Ahora debemos tomar valor en el punto $p$, que es un punto crítico.  El problema anterior nos dice que el último sumando en el punto $p$ es nulo por lo tanto observamos que
+$$
+ \frac{1}{2} Z_p (Z\escalar{X}{X}) +\escalar{R(X,Z)X}{Z}(p)=\escalar{A_XZ}{A_XZ}(p)
+$$
+que es justamente lo que nos pedían demostrar.  \fin 
+
+
+
+\newpage
+
+
+\begin{pro}
+
+Sea $X$ un campo de Killing en $\V$, $p \in \V$ y $U$ un entorno normal de $p$.  Suponemos que $p$ es el único punto de $U$ que cumple $X(p)=0$.  Entonces $X$ es tangente a las esferas geodésicas centradas en $p$ y contenidas en el entorno normal.
+
+
+\end{pro}
+
+\dem
+
+
+Por el lema de Gauss, las geodésicas que parten de $p$ son perpendiculares a las esferas geodésicas.  Mostrar que un vector es tangente a las esferas es equivalente a mostrar que el vector es perpendicular a las geodésicas.  Para ello utilizaremos el siguiente resultado general.
+
+Si $X$ es de Killing, entonces $\escalar{\dot \gamma}{X}$ es constante a lo largo de $\gamma$.   Derivemos la expresión para obtener el resultado
+$$
+\frac{d}{dt}\escalar{\dot \gamma}{X} = \escalar{\nabla_{\dot \gamma} \dot \gamma}{X} + \escalar{\dot \gamma}{\nabla_{\dot \gamma} X}
+$$
+
+Por ser geodésica el primer sumando es nulo.  Por ser de Killing, $\nabla X$ es antisimétrico y el segundo sumando tambien es nulo.  Luego la derivada es nula.  
+
+Como $X(p)=0$, tenemos que $\escalar{\dot \gamma}{X}=0$ en todos los puntos.  Como $X$ es solamente nulo en $p$ concluimos que $X$ es perpendicular a las geodésicas contenidas en el entorno normal.  Luego es tangente a las esferas geodésicas.  \fin
+
+
+\newpage
+
+\begin{pro}
+
+Un campo vectorial en $\R^n$ se puede interpretar como una aplicación \linebreak $v : \R^n \lto \R^n$.  Decimos que el campo es lineal si $v$ es una aplicación lineal.
+
+Un campo lineal, definido  por una matriz $A$ es de Killing si y solo si $A$ es antisimétrico.
+
+\end{pro}
+
+Sea $X$ un campo lineal
+$$
+X = \alpha_i \partial_i = a_{ij} x_j \partial_i
+$$
+Los coeficientes $a_{ij}$ forman una matriz $A$, que es la matriz asociada al campo.
+
+Sean tambien los campos
+\begin{eqnarray}\nonumber
+Y & =& f_h \partial_h\\ \nonumber
+Z&=& g_l \partial_l \nonumber
+\end{eqnarray}
+
+Hemos visto que $X$ es de Killing si y solo si $\nabla X$ es antisimétrico. Esto se traduce en la ecuación de Killing
+$$
+\escalar{\nabla_Y X}{Z}+ \escalar{Y}{\nabla_Z X}
+$$
+
+Calculemos en coordenadas el primer sumando.
+
+$$
+\nabla_YX = Y(a_{ij}x_j \partial_i) = a_{ij} Y(x_j)\partial_i = a_{ij}f_j \partial_i
+$$
+
+Si multiplicamos escalarmente por el campo $Z$ obtenemos
+$$
+\escalar{\nabla_Y X}{Z}= g_l f_j a_{jl}
+$$
+
+Haciendo lo mismo en el segundo sumando la ecuación de Killing nos queda
+$$
+g_lf_j a_{jl}+ f_lg_ja_{jl}=0
+$$
+
+Como la ecuación tiene índices cambiados, es cierta si y solo si $a_{lj}= -a_{jl}$, o sea si y solo si la matriz $A$ que define el campo $X$ es antisimétrica.  \fin
+
+
+
+\newpage
+
+\begin{pro}
+
+Sea $\V$ una variedad riemanniana compacta de dimensión par, cuya curvatura seccional es positiva.  Demostrar que todo campo de Killing $X$ tiene una sigularidad (esto es, que existe un punto $p$ tal que $X(p)=0$)
+
+\end{pro}
+
+\dem
+
+En una variedad diferenciable, dado un punto crítico de una función, se puede definir la diferencial segunda.  En dicho punto coincide con el hessiano, que es una construcción riemanniana (\cite[pág 118]{galrie}).
+
+
+Realizaremos la demostración por reducción al absurdo.  La función \linebreak $f= \frac{1}{2}\abs{X}^2= \frac{1}{2}\escalar{X}{X}$ es diferenciable.  Luego el estudio de sus puntos extremos se puede realizar con el cálculo diferencial. Como estamos en un compacto, la función debe alcanzar un mínimo.  En dicho mínimo la diferencial debe ser nula y el hessiano (diferencial segunda) debe ser una forma bilineal positiva (algún autovalor puede ser nulo, pero nunca negativo).
+
+El hessiano es una derivada segunda y por ello está relacionado con la curvatura.  Utilizaremos el problema \ref{pro:hessiano} para calcular dicha diferencial.  Sabemos por dicho problema que en un punto crítico tenemos la siguiente identidad
+$$
+\escalar{A_XZ}{A_XZ}(p) = \frac{1}{2} Z_p (Z\escalar{X}{X}) +\escalar{R(X,Z)X}{Z}(p)
+$$
+El primero de los sumandos es justamente la diferencial segunda de nuestra función $f$.  Luego la diferencial segunda es 
+$$
+\escalar{A_XZ}{A_XZ}(p) -\escalar{R(X,Z)X}{Z}(p)
+$$
+Veamos ahora que si la curvatura seccional es positiva, podemos conseguir que esta diferencial sea menor que cero.
+
+Consideramos la aplicación lineal $A_X$ en el punto $p$.  Como $X_p$ es no nulo dicha aplicación lineal es no nula.  Además es antisimétrica y tiene un autovalor nulo (pues $\nabla_X X$ es el gradiente y se anula en $p$).  Como estamos en dimensión par, la aplicación antisimétrica debe tener otro autovalor nulo, linealmente independiente con $X_p$.  Denotemos dicho autovalor por $Y_p$. Sustituimos el campo $Z$ por el vector $Y_p$ en la diferencial segunda.  El primer sumando de la diferencial es nulo, pues el vector es nulo.  El segundo sumando es negativo, pues los vectores son linealmente independientes y entonces la curvatura es estrictamente positiva, según la hipótesis.
+
+Hemos visto que si el mínimo se produce para un $p$ tal que $X_p$ no es nulo, entonces la diferencial segunda no es definida positiva, lo cual es una contradicción.  \fin
+
+\newpage
+
+
+
+\nocite{*}
+
+\addcontentsline{toc}{section}{Bibliografía}
+
+\bibliographystyle{plain}
+
+\bibliography{conexiones}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
